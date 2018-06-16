@@ -2,6 +2,7 @@
 
 #include "ImageLabel.h"
 #include "GraphDigitizer.h"
+#include "ImageFeatureExtractor.h"
 
 #include <QtWidgets>
 #if defined(QT_PRINTSUPPORT_LIB)
@@ -14,6 +15,7 @@
 uiGraphDigitizer::uiGraphDigitizer (QWidget *parent)
     : QMainWindow(parent)
     , graphDigitizer_(0)
+    , imgFeatExtractor_(0)
 {
     ui.setupUi(this);
     graphDigitizer_ = &ui.imageLabel->getModel(); //Provides a shortcut for the model
@@ -29,6 +31,14 @@ uiGraphDigitizer::uiGraphDigitizer (QWidget *parent)
 
     connectSignalsSlots();
 }
+
+
+uiGraphDigitizer::~uiGraphDigitizer()
+{
+    delete graphDigitizer_;
+    delete imgFeatExtractor_;
+}
+
 
 void uiGraphDigitizer::connectSignalsSlots()
 {
@@ -217,6 +227,22 @@ void uiGraphDigitizer::on_actionAdd_Dataset_triggered(bool checked)
     ui.imageLabel->pickMode(checked);
 }
 
+void uiGraphDigitizer::on_quantizedImageBtn_clicked()
+{
+    imgFeatExtractor_ = new ImageFeatureExtractor("C:\\Users\\hmageste\\Pictures\\RHOB-V-P-cross-plot-colored-by-V-Clay-Figure-3-V-P-V-S-cross-plot-colored-by-V.png");//ui.imageLabel->image());
+    int nrColors = ui.nrColorsSB->value();
+    imgFeatExtractor_->quantize(nrColors);
+    std::vector<QColor> colors = imgFeatExtractor_->getColors();
+    ui.quantizedColorLabel->setColors(QVector<QColor>::fromStdVector(colors));
+}
+
+
+void uiGraphDigitizer::on_clearAxisBtn_clicked()
+{
+    ui.setTransformBtn->setEnabled(true);
+    ui.imageLabel->clearAxisPoints();
+}
+
 
 void uiGraphDigitizer::on_setTransformBtn_clicked()
 {
@@ -234,13 +260,6 @@ void uiGraphDigitizer::on_setTransformBtn_clicked()
     graphDigitizer_->setTransform();
 
     ui.setTransformBtn->setEnabled(false);
-}
-
-
-void uiGraphDigitizer::on_clearAxisBtn_clicked()
-{
-    ui.setTransformBtn->setEnabled(true);
-    ui.imageLabel->clearAxisPoints();
 }
 
 

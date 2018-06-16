@@ -122,4 +122,10 @@ void ImageLabel::paintEvent (QPaintEvent* paintEvent)
         for (const QPointF& qpoint : model_.getXYPixelCoords())
             painter.drawPoint(qpoint);
     }
+
+    pen.setColor(Qt::blue);
+    pen.setWidth(10);
+    painter.setPen(pen);
+    for (const QPointF& qpoint : pxAxisPointsSimplified_)
+        painter.drawPoint(qpoint);
 }

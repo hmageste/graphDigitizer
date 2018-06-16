@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'uiGraphDigitizer.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.4
+** Created by: Qt User Interface Compiler version 5.11.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -12,7 +12,6 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
@@ -24,12 +23,14 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QScrollArea>
+#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 #include "ImageLabel.h"
+#include "QuantizedColorLabel.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -49,8 +50,13 @@ public:
     QAction *action_Fit_to_Window;
     QAction *action_About;
     QAction *actionAbout_Qt;
+    QAction *actionSet_AOI;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
+    QScrollArea *scrollArea;
+    QWidget *scrollAreaWidgetContents_2;
+    QVBoxLayout *verticalLayout;
+    ImageLabel *imageLabel;
     QVBoxLayout *axisVL;
     QCheckBox *displayAxisChk;
     QHBoxLayout *xAxisHL;
@@ -65,11 +71,14 @@ public:
     QLineEdit *y2AxisField;
     QPushButton *setTransformBtn;
     QPushButton *clearAxisBtn;
+    ImageLabel *resultLabel;
     QTableWidget *tableWidget_2;
-    QScrollArea *scrollArea;
-    QWidget *scrollAreaWidgetContents_2;
-    QVBoxLayout *verticalLayout;
-    ImageLabel *imageLabel;
+    QVBoxLayout *verticalLayout_2;
+    QHBoxLayout *horizontalLayout;
+    QLabel *label;
+    QSpinBox *nrColorsSB;
+    QPushButton *quantizedImageBtn;
+    QuantizedColorLabel *quantizedColorLabel;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuEdit;
@@ -82,7 +91,7 @@ public:
     {
         if (GraphDigitizerClass->objectName().isEmpty())
             GraphDigitizerClass->setObjectName(QStringLiteral("GraphDigitizerClass"));
-        GraphDigitizerClass->resize(950, 708);
+        GraphDigitizerClass->resize(1043, 664);
         GraphDigitizerClass->setMouseTracking(true);
         actionOpen = new QAction(GraphDigitizerClass);
         actionOpen->setObjectName(QStringLiteral("actionOpen"));
@@ -119,23 +128,51 @@ public:
         action_About->setObjectName(QStringLiteral("action_About"));
         actionAbout_Qt = new QAction(GraphDigitizerClass);
         actionAbout_Qt->setObjectName(QStringLiteral("actionAbout_Qt"));
+        actionSet_AOI = new QAction(GraphDigitizerClass);
+        actionSet_AOI->setObjectName(QStringLiteral("actionSet_AOI"));
         centralWidget = new QWidget(GraphDigitizerClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        scrollArea = new QScrollArea(centralWidget);
+        scrollArea->setObjectName(QStringLiteral("scrollArea"));
+        scrollArea->setWidgetResizable(true);
+        scrollAreaWidgetContents_2 = new QWidget();
+        scrollAreaWidgetContents_2->setObjectName(QStringLiteral("scrollAreaWidgetContents_2"));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 709, 591));
+        verticalLayout = new QVBoxLayout(scrollAreaWidgetContents_2);
+        verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        imageLabel = new ImageLabel(scrollAreaWidgetContents_2);
+        imageLabel->setObjectName(QStringLiteral("imageLabel"));
+        QSizePolicy sizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(imageLabel->sizePolicy().hasHeightForWidth());
+        imageLabel->setSizePolicy(sizePolicy);
+        imageLabel->setMouseTracking(true);
+        imageLabel->setScaledContents(true);
+
+        verticalLayout->addWidget(imageLabel);
+
+        scrollArea->setWidget(scrollAreaWidgetContents_2);
+
+        gridLayout->addWidget(scrollArea, 2, 1, 6, 1);
+
         axisVL = new QVBoxLayout();
         axisVL->setSpacing(6);
         axisVL->setObjectName(QStringLiteral("axisVL"));
         axisVL->setSizeConstraint(QLayout::SetDefaultConstraint);
         displayAxisChk = new QCheckBox(centralWidget);
         displayAxisChk->setObjectName(QStringLiteral("displayAxisChk"));
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Minimum);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(displayAxisChk->sizePolicy().hasHeightForWidth());
-        displayAxisChk->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Minimum);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(displayAxisChk->sizePolicy().hasHeightForWidth());
+        displayAxisChk->setSizePolicy(sizePolicy1);
         displayAxisChk->setMaximumSize(QSize(200, 20));
 
         axisVL->addWidget(displayAxisChk);
@@ -151,28 +188,30 @@ public:
 
         x1AxisField = new QLineEdit(centralWidget);
         x1AxisField->setObjectName(QStringLiteral("x1AxisField"));
-        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(x1AxisField->sizePolicy().hasHeightForWidth());
-        x1AxisField->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(x1AxisField->sizePolicy().hasHeightForWidth());
+        x1AxisField->setSizePolicy(sizePolicy2);
         x1AxisField->setMaximumSize(QSize(200, 20));
+        x1AxisField->setAlignment(Qt::AlignCenter);
 
         xAxisHL->addWidget(x1AxisField);
 
         x2AxisLabel = new QLabel(centralWidget);
         x2AxisLabel->setObjectName(QStringLiteral("x2AxisLabel"));
-        sizePolicy.setHeightForWidth(x2AxisLabel->sizePolicy().hasHeightForWidth());
-        x2AxisLabel->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(x2AxisLabel->sizePolicy().hasHeightForWidth());
+        x2AxisLabel->setSizePolicy(sizePolicy1);
         x2AxisLabel->setMaximumSize(QSize(200, 130));
 
         xAxisHL->addWidget(x2AxisLabel);
 
         x2AxisField = new QLineEdit(centralWidget);
         x2AxisField->setObjectName(QStringLiteral("x2AxisField"));
-        sizePolicy1.setHeightForWidth(x2AxisField->sizePolicy().hasHeightForWidth());
-        x2AxisField->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(x2AxisField->sizePolicy().hasHeightForWidth());
+        x2AxisField->setSizePolicy(sizePolicy2);
         x2AxisField->setMaximumSize(QSize(200, 20));
+        x2AxisField->setAlignment(Qt::AlignCenter);
 
         xAxisHL->addWidget(x2AxisField);
 
@@ -190,25 +229,27 @@ public:
 
         y1AxisField = new QLineEdit(centralWidget);
         y1AxisField->setObjectName(QStringLiteral("y1AxisField"));
-        sizePolicy1.setHeightForWidth(y1AxisField->sizePolicy().hasHeightForWidth());
-        y1AxisField->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(y1AxisField->sizePolicy().hasHeightForWidth());
+        y1AxisField->setSizePolicy(sizePolicy2);
         y1AxisField->setMaximumSize(QSize(200, 20));
+        y1AxisField->setAlignment(Qt::AlignCenter);
 
         yAxisHL->addWidget(y1AxisField);
 
         y2AxisLabel = new QLabel(centralWidget);
         y2AxisLabel->setObjectName(QStringLiteral("y2AxisLabel"));
-        sizePolicy.setHeightForWidth(y2AxisLabel->sizePolicy().hasHeightForWidth());
-        y2AxisLabel->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(y2AxisLabel->sizePolicy().hasHeightForWidth());
+        y2AxisLabel->setSizePolicy(sizePolicy1);
         y2AxisLabel->setMaximumSize(QSize(200, 130));
 
         yAxisHL->addWidget(y2AxisLabel);
 
         y2AxisField = new QLineEdit(centralWidget);
         y2AxisField->setObjectName(QStringLiteral("y2AxisField"));
-        sizePolicy1.setHeightForWidth(y2AxisField->sizePolicy().hasHeightForWidth());
-        y2AxisField->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(y2AxisField->sizePolicy().hasHeightForWidth());
+        y2AxisField->setSizePolicy(sizePolicy2);
         y2AxisField->setMaximumSize(QSize(200, 20));
+        y2AxisField->setAlignment(Qt::AlignCenter);
 
         yAxisHL->addWidget(y2AxisField);
 
@@ -217,22 +258,37 @@ public:
 
         setTransformBtn = new QPushButton(centralWidget);
         setTransformBtn->setObjectName(QStringLiteral("setTransformBtn"));
-        sizePolicy.setHeightForWidth(setTransformBtn->sizePolicy().hasHeightForWidth());
-        setTransformBtn->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(setTransformBtn->sizePolicy().hasHeightForWidth());
+        setTransformBtn->setSizePolicy(sizePolicy1);
         setTransformBtn->setMaximumSize(QSize(200, 20));
 
         axisVL->addWidget(setTransformBtn);
 
         clearAxisBtn = new QPushButton(centralWidget);
         clearAxisBtn->setObjectName(QStringLiteral("clearAxisBtn"));
-        sizePolicy.setHeightForWidth(clearAxisBtn->sizePolicy().hasHeightForWidth());
-        clearAxisBtn->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(clearAxisBtn->sizePolicy().hasHeightForWidth());
+        clearAxisBtn->setSizePolicy(sizePolicy1);
         clearAxisBtn->setMaximumSize(QSize(200, 20));
 
         axisVL->addWidget(clearAxisBtn);
 
 
-        gridLayout->addLayout(axisVL, 0, 1, 1, 1);
+        gridLayout->addLayout(axisVL, 2, 2, 1, 1);
+
+        resultLabel = new ImageLabel(centralWidget);
+        resultLabel->setObjectName(QStringLiteral("resultLabel"));
+        QSizePolicy sizePolicy3(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(resultLabel->sizePolicy().hasHeightForWidth());
+        resultLabel->setSizePolicy(sizePolicy3);
+        resultLabel->setMinimumSize(QSize(100, 100));
+        resultLabel->setMaximumSize(QSize(100, 100));
+        resultLabel->setAutoFillBackground(true);
+        resultLabel->setScaledContents(false);
+        resultLabel->setAlignment(Qt::AlignCenter);
+
+        gridLayout->addWidget(resultLabel, 7, 0, 1, 1);
 
         tableWidget_2 = new QTableWidget(centralWidget);
         if (tableWidget_2->columnCount() < 2)
@@ -253,38 +309,62 @@ public:
         tableWidget_2->horizontalHeader()->setStretchLastSection(true);
         tableWidget_2->verticalHeader()->setStretchLastSection(false);
 
-        gridLayout->addWidget(tableWidget_2, 1, 1, 1, 1);
+        gridLayout->addWidget(tableWidget_2, 7, 2, 1, 1);
 
-        scrollArea = new QScrollArea(centralWidget);
-        scrollArea->setObjectName(QStringLiteral("scrollArea"));
-        scrollArea->setWidgetResizable(true);
-        scrollAreaWidgetContents_2 = new QWidget();
-        scrollAreaWidgetContents_2->setObjectName(QStringLiteral("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 722, 635));
-        verticalLayout = new QVBoxLayout(scrollAreaWidgetContents_2);
-        verticalLayout->setSpacing(6);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        imageLabel = new ImageLabel(scrollAreaWidgetContents_2);
-        imageLabel->setObjectName(QStringLiteral("imageLabel"));
-        QSizePolicy sizePolicy2(QSizePolicy::Ignored, QSizePolicy::Ignored);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(imageLabel->sizePolicy().hasHeightForWidth());
-        imageLabel->setSizePolicy(sizePolicy2);
-        imageLabel->setMouseTracking(true);
-        imageLabel->setScaledContents(true);
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setSpacing(6);
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        label = new QLabel(centralWidget);
+        label->setObjectName(QStringLiteral("label"));
 
-        verticalLayout->addWidget(imageLabel);
+        horizontalLayout->addWidget(label);
 
-        scrollArea->setWidget(scrollAreaWidgetContents_2);
+        nrColorsSB = new QSpinBox(centralWidget);
+        nrColorsSB->setObjectName(QStringLiteral("nrColorsSB"));
+        nrColorsSB->setMinimum(2);
+        nrColorsSB->setMaximum(64);
 
-        gridLayout->addWidget(scrollArea, 0, 0, 2, 1);
+        horizontalLayout->addWidget(nrColorsSB);
+
+
+        verticalLayout_2->addLayout(horizontalLayout);
+
+        quantizedImageBtn = new QPushButton(centralWidget);
+        quantizedImageBtn->setObjectName(QStringLiteral("quantizedImageBtn"));
+        QSizePolicy sizePolicy4(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(quantizedImageBtn->sizePolicy().hasHeightForWidth());
+        quantizedImageBtn->setSizePolicy(sizePolicy4);
+
+        verticalLayout_2->addWidget(quantizedImageBtn);
+
+        quantizedColorLabel = new QuantizedColorLabel(centralWidget);
+        quantizedColorLabel->setObjectName(QStringLiteral("quantizedColorLabel"));
+        QSizePolicy sizePolicy5(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(quantizedColorLabel->sizePolicy().hasHeightForWidth());
+        quantizedColorLabel->setSizePolicy(sizePolicy5);
+        quantizedColorLabel->setMinimumSize(QSize(80, 80));
+        quantizedColorLabel->setMaximumSize(QSize(100, 100));
+        quantizedColorLabel->setMouseTracking(true);
+        quantizedColorLabel->setAutoFillBackground(true);
+        quantizedColorLabel->setScaledContents(true);
+        quantizedColorLabel->setAlignment(Qt::AlignCenter);
+
+        verticalLayout_2->addWidget(quantizedColorLabel);
+
+
+        gridLayout->addLayout(verticalLayout_2, 2, 0, 1, 1);
 
         GraphDigitizerClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(GraphDigitizerClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 950, 21));
+        menuBar->setGeometry(QRect(0, 0, 1043, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuEdit = new QMenu(menuBar);
@@ -305,6 +385,7 @@ public:
         x2AxisLabel->setBuddy(x2AxisField);
         y1AxisLabel->setBuddy(y1AxisField);
         y2AxisLabel->setBuddy(y2AxisField);
+        label->setBuddy(nrColorsSB);
 #endif // QT_NO_SHORTCUT
         QWidget::setTabOrder(displayAxisChk, x1AxisField);
         QWidget::setTabOrder(x1AxisField, x2AxisField);
@@ -325,7 +406,9 @@ public:
         menuFile->addAction(actionExit);
         menuEdit->addAction(actionCopy);
         menuEdit->addAction(actionPaste);
+        menuEdit->addSeparator();
         menuEdit->addAction(actionAdd_Dataset);
+        menuEdit->addAction(actionSet_AOI);
         menuView->addAction(actionZoom_In);
         menuView->addAction(actionZoom_Out);
         menuView->addAction(actionNormal_Size);
@@ -340,52 +423,57 @@ public:
 
     void retranslateUi(QMainWindow *GraphDigitizerClass)
     {
-        GraphDigitizerClass->setWindowTitle(QApplication::translate("GraphDigitizerClass", "GraphDigitizer", Q_NULLPTR));
-        actionOpen->setText(QApplication::translate("GraphDigitizerClass", "&Open...", Q_NULLPTR));
-        actionSaveAs->setText(QApplication::translate("GraphDigitizerClass", "&SaveAs...", Q_NULLPTR));
-        actionPrint->setText(QApplication::translate("GraphDigitizerClass", "&Print...", Q_NULLPTR));
-        actionExit->setText(QApplication::translate("GraphDigitizerClass", "E&xit", Q_NULLPTR));
+        GraphDigitizerClass->setWindowTitle(QApplication::translate("GraphDigitizerClass", "GraphDigitizer", nullptr));
+        actionOpen->setText(QApplication::translate("GraphDigitizerClass", "&Open...", nullptr));
+        actionSaveAs->setText(QApplication::translate("GraphDigitizerClass", "&SaveAs...", nullptr));
+        actionPrint->setText(QApplication::translate("GraphDigitizerClass", "&Print...", nullptr));
+        actionExit->setText(QApplication::translate("GraphDigitizerClass", "E&xit", nullptr));
 #ifndef QT_NO_SHORTCUT
-        actionExit->setShortcut(QApplication::translate("GraphDigitizerClass", "Ctrl+Q", Q_NULLPTR));
+        actionExit->setShortcut(QApplication::translate("GraphDigitizerClass", "Ctrl+Q", nullptr));
 #endif // QT_NO_SHORTCUT
-        actionCopy->setText(QApplication::translate("GraphDigitizerClass", "&Copy", Q_NULLPTR));
-        actionPaste->setText(QApplication::translate("GraphDigitizerClass", "&Paste", Q_NULLPTR));
-        actionAdd_Dataset->setText(QApplication::translate("GraphDigitizerClass", "&Add Dataset", Q_NULLPTR));
+        actionCopy->setText(QApplication::translate("GraphDigitizerClass", "&Copy", nullptr));
+        actionPaste->setText(QApplication::translate("GraphDigitizerClass", "&Paste", nullptr));
+        actionAdd_Dataset->setText(QApplication::translate("GraphDigitizerClass", "&Add Dataset", nullptr));
 #ifndef QT_NO_SHORTCUT
-        actionAdd_Dataset->setShortcut(QApplication::translate("GraphDigitizerClass", "Ctrl+A", Q_NULLPTR));
+        actionAdd_Dataset->setShortcut(QApplication::translate("GraphDigitizerClass", "Ctrl+A", nullptr));
 #endif // QT_NO_SHORTCUT
-        actionZoom_In->setText(QApplication::translate("GraphDigitizerClass", "Zoom &In (25%)", Q_NULLPTR));
-        actionZoom_Out->setText(QApplication::translate("GraphDigitizerClass", "Zoom &Out (25%)", Q_NULLPTR));
-        actionNormal_Size->setText(QApplication::translate("GraphDigitizerClass", "&Normal Size", Q_NULLPTR));
+        actionZoom_In->setText(QApplication::translate("GraphDigitizerClass", "Zoom &In (25%)", nullptr));
+        actionZoom_Out->setText(QApplication::translate("GraphDigitizerClass", "Zoom &Out (25%)", nullptr));
+        actionNormal_Size->setText(QApplication::translate("GraphDigitizerClass", "&Normal Size", nullptr));
 #ifndef QT_NO_SHORTCUT
-        actionNormal_Size->setShortcut(QApplication::translate("GraphDigitizerClass", "Ctrl+S", Q_NULLPTR));
+        actionNormal_Size->setShortcut(QApplication::translate("GraphDigitizerClass", "Ctrl+S", nullptr));
 #endif // QT_NO_SHORTCUT
-        action_Fit_to_Window->setText(QApplication::translate("GraphDigitizerClass", "&Fit to Window", Q_NULLPTR));
+        action_Fit_to_Window->setText(QApplication::translate("GraphDigitizerClass", "&Fit to Window", nullptr));
 #ifndef QT_NO_SHORTCUT
-        action_Fit_to_Window->setShortcut(QApplication::translate("GraphDigitizerClass", "Ctrl+F", Q_NULLPTR));
+        action_Fit_to_Window->setShortcut(QApplication::translate("GraphDigitizerClass", "Ctrl+F", nullptr));
 #endif // QT_NO_SHORTCUT
-        action_About->setText(QApplication::translate("GraphDigitizerClass", "&About", Q_NULLPTR));
-        actionAbout_Qt->setText(QApplication::translate("GraphDigitizerClass", "About &Qt", Q_NULLPTR));
-        displayAxisChk->setText(QApplication::translate("GraphDigitizerClass", "Display Axis", Q_NULLPTR));
-        x1AxisLabel->setText(QApplication::translate("GraphDigitizerClass", "X1", Q_NULLPTR));
-        x1AxisField->setText(QApplication::translate("GraphDigitizerClass", "0", Q_NULLPTR));
-        x2AxisLabel->setText(QApplication::translate("GraphDigitizerClass", "X2", Q_NULLPTR));
-        x2AxisField->setText(QApplication::translate("GraphDigitizerClass", "1", Q_NULLPTR));
-        y1AxisLabel->setText(QApplication::translate("GraphDigitizerClass", "Y1", Q_NULLPTR));
-        y1AxisField->setText(QApplication::translate("GraphDigitizerClass", "0", Q_NULLPTR));
-        y2AxisLabel->setText(QApplication::translate("GraphDigitizerClass", "Y2", Q_NULLPTR));
-        y2AxisField->setText(QApplication::translate("GraphDigitizerClass", "1", Q_NULLPTR));
-        setTransformBtn->setText(QApplication::translate("GraphDigitizerClass", "Set Transform", Q_NULLPTR));
-        clearAxisBtn->setText(QApplication::translate("GraphDigitizerClass", "Clear Axis", Q_NULLPTR));
-        QTableWidgetItem *___qtablewidgetitem = tableWidget_2->horizontalHeaderItem(0);
-        ___qtablewidgetitem->setText(QApplication::translate("GraphDigitizerClass", "X", Q_NULLPTR));
-        QTableWidgetItem *___qtablewidgetitem1 = tableWidget_2->horizontalHeaderItem(1);
-        ___qtablewidgetitem1->setText(QApplication::translate("GraphDigitizerClass", "Y", Q_NULLPTR));
+        action_About->setText(QApplication::translate("GraphDigitizerClass", "&About", nullptr));
+        actionAbout_Qt->setText(QApplication::translate("GraphDigitizerClass", "About &Qt", nullptr));
+        actionSet_AOI->setText(QApplication::translate("GraphDigitizerClass", "Set AOI", nullptr));
         imageLabel->setText(QString());
-        menuFile->setTitle(QApplication::translate("GraphDigitizerClass", "&File", Q_NULLPTR));
-        menuEdit->setTitle(QApplication::translate("GraphDigitizerClass", "&Edit", Q_NULLPTR));
-        menuView->setTitle(QApplication::translate("GraphDigitizerClass", "&View", Q_NULLPTR));
-        menu_Help->setTitle(QApplication::translate("GraphDigitizerClass", "&Help", Q_NULLPTR));
+        displayAxisChk->setText(QApplication::translate("GraphDigitizerClass", "Display Axis", nullptr));
+        x1AxisLabel->setText(QApplication::translate("GraphDigitizerClass", "X1", nullptr));
+        x1AxisField->setText(QApplication::translate("GraphDigitizerClass", "0", nullptr));
+        x2AxisLabel->setText(QApplication::translate("GraphDigitizerClass", "X2", nullptr));
+        x2AxisField->setText(QApplication::translate("GraphDigitizerClass", "1", nullptr));
+        y1AxisLabel->setText(QApplication::translate("GraphDigitizerClass", "Y1", nullptr));
+        y1AxisField->setText(QApplication::translate("GraphDigitizerClass", "0", nullptr));
+        y2AxisLabel->setText(QApplication::translate("GraphDigitizerClass", "Y2", nullptr));
+        y2AxisField->setText(QApplication::translate("GraphDigitizerClass", "1", nullptr));
+        setTransformBtn->setText(QApplication::translate("GraphDigitizerClass", "Set Transform", nullptr));
+        clearAxisBtn->setText(QApplication::translate("GraphDigitizerClass", "Clear Axis", nullptr));
+        resultLabel->setText(QApplication::translate("GraphDigitizerClass", "TextLabel", nullptr));
+        QTableWidgetItem *___qtablewidgetitem = tableWidget_2->horizontalHeaderItem(0);
+        ___qtablewidgetitem->setText(QApplication::translate("GraphDigitizerClass", "X", nullptr));
+        QTableWidgetItem *___qtablewidgetitem1 = tableWidget_2->horizontalHeaderItem(1);
+        ___qtablewidgetitem1->setText(QApplication::translate("GraphDigitizerClass", "Y", nullptr));
+        label->setText(QApplication::translate("GraphDigitizerClass", "Colors", nullptr));
+        quantizedImageBtn->setText(QApplication::translate("GraphDigitizerClass", "Quantize Image", nullptr));
+        quantizedColorLabel->setText(QApplication::translate("GraphDigitizerClass", "TextLabel", nullptr));
+        menuFile->setTitle(QApplication::translate("GraphDigitizerClass", "&File", nullptr));
+        menuEdit->setTitle(QApplication::translate("GraphDigitizerClass", "&Edit", nullptr));
+        menuView->setTitle(QApplication::translate("GraphDigitizerClass", "&View", nullptr));
+        menu_Help->setTitle(QApplication::translate("GraphDigitizerClass", "&Help", nullptr));
     } // retranslateUi
 
 };

@@ -10,7 +10,9 @@ constexpr std::size_t operator "" _sz (unsigned long long n)
 
 GraphDigitizer::GraphDigitizer ()
     : pxAxisCoords_(4)
-{}
+{
+    
+}
 
 
 GraphDigitizer::~GraphDigitizer ()
@@ -48,7 +50,7 @@ void GraphDigitizer::setPxAxisCoords (const QVector<QPointF>& pxAxisCoords)
         return;
     }
 
-    for (size_t idx = 0; idx < std::size_t{4}; ++idx)
+    for (unsigned int idx = 0; idx < 4; ++idx)
     {
         const float& x = pxAxisCoords[idx].x();
         const float& y = pxAxisCoords[idx].y();

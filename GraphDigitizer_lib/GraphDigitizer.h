@@ -3,9 +3,9 @@
 #include <vector>
 #include <boost/geometry.hpp>
 
-#include <QList>
-#include <QPointF>
-#include <QTransform>
+#include <QtCore/QPointF>
+#include <QtGUI/QList>
+#include <QtGUI/QTransform>
 
 typedef boost::geometry::model::point<float, 2, boost::geometry::cs::cartesian> point2d;
 
@@ -32,6 +32,7 @@ public:
     inline void setX2Axis(const float& x) { x2WorldAxis_ = x; };
     inline void setY1Axis(const float& x) { y1WorldAxis_ = x; };
     inline void setY2Axis(const float& x) { y2WorldAxis_ = x; };
+
 private:
     std::list<point2d> pxPickedPoints_;
     std::vector<point2d> pxAxisCoords_;

@@ -39,7 +39,7 @@
     <ClCompile Include="uiGraphDigitizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GraphDigitizer.cpp">
+    <ClCompile Include="QuantizedColorLabel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -48,6 +48,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="uiGraphDigitizer.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="QuantizedColorLabel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -60,10 +63,5 @@
     <QtUic Include="uiGraphDigitizer.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="GraphDigitizer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

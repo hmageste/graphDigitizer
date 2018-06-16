@@ -14,12 +14,15 @@
 class QImage;
 class QScrollBar;
 
+class ImageFeatureExtractor;
+
 class uiGraphDigitizer : public QMainWindow
 {
     Q_OBJECT
 
 public:
     uiGraphDigitizer(QWidget *parent = Q_NULLPTR);
+    virtual ~uiGraphDigitizer();
     bool loadFile (const QString &);
 
 private slots:
@@ -35,8 +38,9 @@ private slots:
     void on_action_About_triggered();
 
     void on_actionAdd_Dataset_triggered(bool checked);
-    void on_setTransformBtn_clicked();
+    void on_quantizedImageBtn_clicked();
     void on_clearAxisBtn_clicked();
+    void on_setTransformBtn_clicked();
     void on_displayAxisChk_stateChanged(int);
 
     void setStatusBarText(const QString&);
@@ -57,6 +61,7 @@ private:
 private:
     Ui::GraphDigitizerClass ui;
     GraphDigitizer* graphDigitizer_;
+    ImageFeatureExtractor* imgFeatExtractor_;
 };
 
 //#endif

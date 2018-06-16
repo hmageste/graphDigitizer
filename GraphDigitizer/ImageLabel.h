@@ -28,6 +28,8 @@ public:
 
     inline void setScaleFactor(float factor) { scaleFactor_ = factor; };
 
+    void setpxAxisPointsSimplified (std::vector<QPointF> t) { pxAxisPointsSimplified_ = t; }
+
 protected:
     void mouseMoveEvent (QMouseEvent*) override;
     void mousePressEvent (QMouseEvent*) override;
@@ -42,6 +44,8 @@ protected:
     float scaleFactor_ = 1.f;
     bool displayAxis_ = true;
     bool pickMode_ = false;
+
+    std::vector<QPointF> pxAxisPointsSimplified_;
 
     GraphDigitizer& model_;
 };
