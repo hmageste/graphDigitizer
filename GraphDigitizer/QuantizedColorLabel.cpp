@@ -41,11 +41,13 @@ void QuantizedColorLabel::setColors(const QVector<QColor>& colors)
 
 void QuantizedColorLabel::mouseMoveEvent(QMouseEvent* event)
 {
+    // TODO: Preview Data
     QLabel::mouseMoveEvent(event);
 }
 
 void QuantizedColorLabel::mousePressEvent(QMouseEvent* event)
 {
+    // TODO: Set data based on the color(s) selected
     QLabel::mousePressEvent(event);
 }
 
@@ -54,25 +56,22 @@ void QuantizedColorLabel::paintEvent(QPaintEvent* paintEvent)
 {
     QLabel::paintEvent(paintEvent);
 
-    QPainter painter(this);
-
-    if (quantizedColors_.size() == 0)
+    const int nrColors = quantizedColors_.size();
+    if (nrColors == 0)
         return;
 
-    int nrColors = quantizedColors_.size();
-    int matrix_dim = ceil(sqrt(nrColors));
+    QPainter painter(this);
+    const int matrix_dim = ceil(sqrt(nrColors));
 
     // calculate side of each color square
     const QSize& paintAreaSize = sizeHint();
-    const float height = paintAreaSize.height() / matrix_dim;
-    const float width = paintAreaSize.width() / matrix_dim;
+    const float height = paintAreaSize.height() / (float)matrix_dim;
+    const float width = paintAreaSize.width() / (float)matrix_dim;
 
-    for (int idy = 0; idy < matrix_dim; ++idy)
-        for (int idx = 0; idx < matrix_dim; ++idx)
-        {
-            if (idy*matrix_dim + idx == nrColors)
-                return;
-            QRectF rect(width*idx, height*idy, width, height);
-            painter.fillRect(rect, quantizedColors_[idy*matrix_dim + idx]);
-        }
+    for (int idx = 0; idx < nrColors; idx++)
+    {
+        div_t divresult = div(idx, matrix_dim);
+        QRectF rect(width*divresult.rem, height*divresult.quot, width, height);
+        painter.fillRect(rect, quantizedColors_[idx]);
+    }
 }

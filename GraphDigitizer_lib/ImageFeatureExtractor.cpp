@@ -1,6 +1,6 @@
 #include "ImageFeatureExtractor.h"
 
-//#include <boost/algorithm/clamp.hpp>
+#include <boost/algorithm/clamp.hpp>
 
 #include <opencv2/opencv.hpp>
 #include "opencv2/imgproc/imgproc.hpp"
